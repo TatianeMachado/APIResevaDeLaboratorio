@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using APIResevaDeLaboratorio.Models;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ReservaDeLaboratorioContext.Models;
@@ -10,6 +11,7 @@ public class Professor
         Turmas = new Collection<Turma>();
         Reservas = new Collection<Reserva>();
         Laboratorios = new Collection<Laboratorio>();
+        ProfessoresTurmas = new Collection<ProfessorTurma>();
     }
 
     public int ProfessorId { get; set; }
@@ -20,7 +22,8 @@ public class Professor
   
     public string Email { get; set; } = string.Empty;
 
-    public ICollection<Turma> Turmas { get; set; } = new List<Turma>();
-    public ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
+    public ICollection<Turma> Turmas { get; set; } 
+    public ICollection<Reserva> Reservas { get; set; } 
     public ICollection<Laboratorio> Laboratorios { get; set; }
+    public ICollection<ProfessorTurma> ProfessoresTurmas { get; set; }
 }
