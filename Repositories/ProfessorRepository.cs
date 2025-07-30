@@ -26,8 +26,10 @@ public class ProfessorRepository : IProfessorRepository
     }
     public async Task UpdateAsync(Professor professor)
     {
-        _professorRepository.Professores.Update(professor);
+        _professorRepository.Entry(professor).State = EntityState.Modified;
         await _professorRepository.SaveChangesAsync();
+
+
     }
     public async Task DeleteAsync(int id)
     {

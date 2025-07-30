@@ -1,6 +1,7 @@
 ﻿using APIResevaDeLaboratorio.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ReservaDeLaboratorioContext.Models;
 
@@ -21,9 +22,12 @@ public class Professor
 
   
     public string Email { get; set; } = string.Empty;
-
-    public ICollection<Turma> Turmas { get; set; } 
+    [JsonIgnore]
+    public ICollection<Turma> Turmas { get; set; }
+    [JsonIgnore]
     public ICollection<Reserva> Reservas { get; set; } 
+    [JsonIgnore]
     public ICollection<Laboratorio> Laboratorios { get; set; }
+    [JsonIgnore]
     public ICollection<ProfessorTurma> ProfessoresTurmas { get; set; }
 }
