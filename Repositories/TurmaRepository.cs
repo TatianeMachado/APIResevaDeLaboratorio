@@ -1,4 +1,5 @@
 ﻿using APIResevaDeLaboratorio.Context;
+using Microsoft.EntityFrameworkCore;
 using ReservaDeLaboratorioContext.Models;
 
 namespace APIResevaDeLaboratorio.Repositories;
@@ -29,10 +30,11 @@ public class TurmaRepository : ITurmaRepository
         }
     }
 
-    public Task<IEnumerable<Turma>> GetAllAsync()
+    public async Task<IEnumerable<Turma>> GetAllAsync()
     {
 
-        return Task.FromResult(_turmaRepository.Turmas.AsEnumerable());
+        return await _turmaRepository.Turmas.ToListAsync();
+
     }
 
     public Task<Turma?> GetByIdAsync(int id)
@@ -47,7 +49,8 @@ public class TurmaRepository : ITurmaRepository
     public Task UpdateAsync(Turma turma)
     {
 
-        _turmaRepository.Turmas.Update(turma);
+        _turmaRepository.Turmas.Entry
+            (turma).State = EntityState.Modified;
         return _turmaRepository.SaveChangesAsync();
 
 

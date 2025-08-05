@@ -9,25 +9,20 @@ public class Professor
 {
     
     public Professor() {
-        Turmas = new Collection<Turma>();
+       
         Reservas = new Collection<Reserva>();
-        Laboratorios = new Collection<Laboratorio>();
-        ProfessoresTurmas = new Collection<ProfessorTurma>();
+        ProfessorTurmas = new Collection<ProfessorTurma>();
+        LaboratorioProfessores = new Collection<LaboratorioProfessor>();
     }
 
     public int ProfessorId { get; set; }
+    public string? Nome { get; set; }
+    public string? Email { get; set; }
+    [JsonIgnore]
+    public ICollection<ProfessorTurma>? ProfessorTurmas { get; set; }
+    [JsonIgnore]
+    public ICollection<LaboratorioProfessor>? LaboratorioProfessores { get; set; }
+    [JsonIgnore]
+    public ICollection<Reserva>? Reservas { get; set; }
 
-    
-    public string Nome { get; set; } = string.Empty;
-
-  
-    public string Email { get; set; } = string.Empty;
-    [JsonIgnore]
-    public ICollection<Turma> Turmas { get; set; }
-    [JsonIgnore]
-    public ICollection<Reserva> Reservas { get; set; } 
-    [JsonIgnore]
-    public ICollection<Laboratorio> Laboratorios { get; set; }
-    [JsonIgnore]
-    public ICollection<ProfessorTurma> ProfessoresTurmas { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using APIResevaDeLaboratorio.Models;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 
 namespace ReservaDeLaboratorioContext.Models;
@@ -9,28 +10,21 @@ public class Turma
     public Turma()
     {
         Reservas = new Collection<Reserva>();
-        Professores = new Collection<Professor>();
-        Laboratorios = new Collection<Laboratorio>();
-        ProfessoresTurmas = new Collection<ProfessorTurma>();
+        ProfessorTurmas = new Collection<ProfessorTurma>();
+        Reservas =new Collection<Reserva>();
 
 
 
     }
 
     public int TurmaId { get; set; }
-
-    
-    public string Nome { get; set; } = string.Empty;
-
-   
+    public string Nome { get; set; }
     public int QuantidadeAlunos { get; set; }
-    
-
-
-
-    public ICollection<Reserva> Reservas { get; set; }
-    public ICollection<Professor> Professores { get; set; }
-    public ICollection<Laboratorio> Laboratorios { get; set; }
-    public ICollection<ProfessorTurma> ProfessoresTurmas { get; set; } 
+    [JsonIgnore]
+    public ICollection<ProfessorTurma>? ProfessorTurmas { get; set; }
+    [JsonIgnore]
+    public ICollection<LaboratorioTurma>? LaboratorioTurmas { get; set; }
+    [JsonIgnore]
+    public ICollection<Reserva>? Reservas { get; set; }
 
 }

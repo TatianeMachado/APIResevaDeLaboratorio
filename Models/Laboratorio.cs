@@ -1,22 +1,28 @@
-﻿using ReservaDeLaboratorioContext.Models;
+﻿using APIResevaDeLaboratorio.Models;
+using ReservaDeLaboratorioContext.Models;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
+
 
 public class Laboratorio
 {
     public Laboratorio()
     {
-        Professores = new Collection<Professor>();
+        
         Reservas = new Collection<Reserva>();
-        Turmas = new Collection<Turma>();
+        LaboratorioProfessores= new Collection<LaboratorioProfessor>();
+        LaboratorioTurmas  = new Collection<LaboratorioTurma>();
     }
 
     public int LaboratorioId { get; set; }
-    public string Nome { get; set; } = string.Empty;
-    public int Capacidade { get; set; } = 20;
-    public Collection<Professor> Professores { get; set; }
-    public Collection <Reserva> Reservas { get;  set; }
-    public Collection <Turma> Turmas { get;  set; }
+    public string? Nome { get; set; }
+    public int Capacidade { get; set; }
+    [JsonIgnore]
+    public ICollection<LaboratorioProfessor>? LaboratorioProfessores { get; set; }
+    [JsonIgnore]
+    public ICollection<LaboratorioTurma>? LaboratorioTurmas { get; set; }
+    [JsonIgnore]
+    public ICollection<Reserva>? Reservas { get; set; }
 
-    // Remover se não quiser navegação inversa
-    // public ICollection<Reserva> Reservas { get; set; }
+
 }

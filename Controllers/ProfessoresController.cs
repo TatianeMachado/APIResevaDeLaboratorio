@@ -56,7 +56,7 @@ await _professorRepository.GetByIdAsync(id);
             NotFound("Não pode ser criado");
         }
 
-        return new CreatedAtRouteResult("ObterProfwssor", new {id= professor.ProfessorId },professor);
+        return new CreatedAtRouteResult("ObterProfessor", new {id= professor.ProfessorId },professor);
 
 
 

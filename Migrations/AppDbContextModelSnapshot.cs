@@ -22,6 +22,36 @@ namespace APIResevaDeLaboratorio.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("APIResevaDeLaboratorio.Models.LaboratorioProfessor", b =>
+                {
+                    b.Property<int>("LaboratorioId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProfessorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LaboratorioId", "ProfessorId");
+
+                    b.HasIndex("ProfessorId");
+
+                    b.ToTable("LaboratorioProfessores");
+                });
+
+            modelBuilder.Entity("APIResevaDeLaboratorio.Models.LaboratorioTurma", b =>
+                {
+                    b.Property<int>("LaboratorioId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TurmaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LaboratorioId", "TurmaId");
+
+                    b.HasIndex("TurmaId");
+
+                    b.ToTable("LaboratorioTurmas");
+                });
+
             modelBuilder.Entity("APIResevaDeLaboratorio.Models.ProfessorTurma", b =>
                 {
                     b.Property<int>("ProfessorId")
@@ -34,7 +64,7 @@ namespace APIResevaDeLaboratorio.Migrations
 
                     b.HasIndex("TurmaId");
 
-                    b.ToTable("ProfessoresTurmas");
+                    b.ToTable("ProfessorTurmas");
                 });
 
             modelBuilder.Entity("Laboratorio", b =>
@@ -57,51 +87,6 @@ namespace APIResevaDeLaboratorio.Migrations
                     b.ToTable("Laboratorios");
                 });
 
-            modelBuilder.Entity("LaboratorioProfessor", b =>
-                {
-                    b.Property<int>("LaboratoriosLaboratorioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProfessoresProfessorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LaboratoriosLaboratorioId", "ProfessoresProfessorId");
-
-                    b.HasIndex("ProfessoresProfessorId");
-
-                    b.ToTable("LaboratorioProfessor");
-                });
-
-            modelBuilder.Entity("LaboratorioTurma", b =>
-                {
-                    b.Property<int>("LaboratoriosLaboratorioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TurmasTurmaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LaboratoriosLaboratorioId", "TurmasTurmaId");
-
-                    b.HasIndex("TurmasTurmaId");
-
-                    b.ToTable("LaboratorioTurma");
-                });
-
-            modelBuilder.Entity("ProfessorTurma", b =>
-                {
-                    b.Property<int>("ProfessoresProfessorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TurmasTurmaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProfessoresProfessorId", "TurmasTurmaId");
-
-                    b.HasIndex("TurmasTurmaId");
-
-                    b.ToTable("ProfessorTurma");
-                });
-
             modelBuilder.Entity("Reserva", b =>
                 {
                     b.Property<int>("ReservaId")
@@ -122,34 +107,19 @@ namespace APIResevaDeLaboratorio.Migrations
                     b.Property<int>("LaboratorioId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LaboratorioId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProfessorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProfessorId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("TurmaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TurmaId1")
                         .HasColumnType("int");
 
                     b.HasKey("ReservaId");
 
                     b.HasIndex("LaboratorioId");
 
-                    b.HasIndex("LaboratorioId1");
-
                     b.HasIndex("ProfessorId");
 
-                    b.HasIndex("ProfessorId1");
-
                     b.HasIndex("TurmaId");
-
-                    b.HasIndex("TurmaId1");
 
                     b.ToTable("Reservas");
                 });
@@ -195,16 +165,54 @@ namespace APIResevaDeLaboratorio.Migrations
                     b.ToTable("Turmas");
                 });
 
+            modelBuilder.Entity("APIResevaDeLaboratorio.Models.LaboratorioProfessor", b =>
+                {
+                    b.HasOne("Laboratorio", "Laboratorio")
+                        .WithMany("LaboratorioProfessores")
+                        .HasForeignKey("LaboratorioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ReservaDeLaboratorioContext.Models.Professor", "Professor")
+                        .WithMany("LaboratorioProfessores")
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Laboratorio");
+
+                    b.Navigation("Professor");
+                });
+
+            modelBuilder.Entity("APIResevaDeLaboratorio.Models.LaboratorioTurma", b =>
+                {
+                    b.HasOne("Laboratorio", "Laboratorio")
+                        .WithMany("LaboratorioTurmas")
+                        .HasForeignKey("LaboratorioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ReservaDeLaboratorioContext.Models.Turma", "Turma")
+                        .WithMany("LaboratorioTurmas")
+                        .HasForeignKey("TurmaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Laboratorio");
+
+                    b.Navigation("Turma");
+                });
+
             modelBuilder.Entity("APIResevaDeLaboratorio.Models.ProfessorTurma", b =>
                 {
                     b.HasOne("ReservaDeLaboratorioContext.Models.Professor", "Professor")
-                        .WithMany("ProfessoresTurmas")
+                        .WithMany("ProfessorTurmas")
                         .HasForeignKey("ProfessorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ReservaDeLaboratorioContext.Models.Turma", "Turma")
-                        .WithMany("ProfessoresTurmas")
+                        .WithMany("ProfessorTurmas")
                         .HasForeignKey("TurmaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -214,82 +222,25 @@ namespace APIResevaDeLaboratorio.Migrations
                     b.Navigation("Turma");
                 });
 
-            modelBuilder.Entity("LaboratorioProfessor", b =>
-                {
-                    b.HasOne("Laboratorio", null)
-                        .WithMany()
-                        .HasForeignKey("LaboratoriosLaboratorioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReservaDeLaboratorioContext.Models.Professor", null)
-                        .WithMany()
-                        .HasForeignKey("ProfessoresProfessorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("LaboratorioTurma", b =>
-                {
-                    b.HasOne("Laboratorio", null)
-                        .WithMany()
-                        .HasForeignKey("LaboratoriosLaboratorioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReservaDeLaboratorioContext.Models.Turma", null)
-                        .WithMany()
-                        .HasForeignKey("TurmasTurmaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ProfessorTurma", b =>
-                {
-                    b.HasOne("ReservaDeLaboratorioContext.Models.Professor", null)
-                        .WithMany()
-                        .HasForeignKey("ProfessoresProfessorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReservaDeLaboratorioContext.Models.Turma", null)
-                        .WithMany()
-                        .HasForeignKey("TurmasTurmaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Reserva", b =>
                 {
                     b.HasOne("Laboratorio", "Laboratorio")
-                        .WithMany()
-                        .HasForeignKey("LaboratorioId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Laboratorio", null)
                         .WithMany("Reservas")
-                        .HasForeignKey("LaboratorioId1");
+                        .HasForeignKey("LaboratorioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReservaDeLaboratorioContext.Models.Professor", "Professor")
-                        .WithMany()
-                        .HasForeignKey("ProfessorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ReservaDeLaboratorioContext.Models.Professor", null)
                         .WithMany("Reservas")
-                        .HasForeignKey("ProfessorId1");
+                        .HasForeignKey("ProfessorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ReservaDeLaboratorioContext.Models.Turma", "Turma")
-                        .WithMany()
-                        .HasForeignKey("TurmaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ReservaDeLaboratorioContext.Models.Turma", null)
                         .WithMany("Reservas")
-                        .HasForeignKey("TurmaId1");
+                        .HasForeignKey("TurmaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Laboratorio");
 
@@ -300,19 +251,27 @@ namespace APIResevaDeLaboratorio.Migrations
 
             modelBuilder.Entity("Laboratorio", b =>
                 {
+                    b.Navigation("LaboratorioProfessores");
+
+                    b.Navigation("LaboratorioTurmas");
+
                     b.Navigation("Reservas");
                 });
 
             modelBuilder.Entity("ReservaDeLaboratorioContext.Models.Professor", b =>
                 {
-                    b.Navigation("ProfessoresTurmas");
+                    b.Navigation("LaboratorioProfessores");
+
+                    b.Navigation("ProfessorTurmas");
 
                     b.Navigation("Reservas");
                 });
 
             modelBuilder.Entity("ReservaDeLaboratorioContext.Models.Turma", b =>
                 {
-                    b.Navigation("ProfessoresTurmas");
+                    b.Navigation("LaboratorioTurmas");
+
+                    b.Navigation("ProfessorTurmas");
 
                     b.Navigation("Reservas");
                 });

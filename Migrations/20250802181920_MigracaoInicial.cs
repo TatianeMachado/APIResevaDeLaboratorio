@@ -65,73 +65,48 @@ namespace APIResevaDeLaboratorio.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "LaboratorioProfessor",
+                name: "LaboratorioProfessores",
                 columns: table => new
                 {
-                    LaboratoriosLaboratorioId = table.Column<int>(type: "int", nullable: false),
-                    ProfessoresProfessorId = table.Column<int>(type: "int", nullable: false)
+                    LaboratorioId = table.Column<int>(type: "int", nullable: false),
+                    ProfessorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LaboratorioProfessor", x => new { x.LaboratoriosLaboratorioId, x.ProfessoresProfessorId });
+                    table.PrimaryKey("PK_LaboratorioProfessores", x => new { x.LaboratorioId, x.ProfessorId });
                     table.ForeignKey(
-                        name: "FK_LaboratorioProfessor_Laboratorios_LaboratoriosLaboratorioId",
-                        column: x => x.LaboratoriosLaboratorioId,
+                        name: "FK_LaboratorioProfessores_Laboratorios_LaboratorioId",
+                        column: x => x.LaboratorioId,
                         principalTable: "Laboratorios",
                         principalColumn: "LaboratorioId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LaboratorioProfessor_Professores_ProfessoresProfessorId",
-                        column: x => x.ProfessoresProfessorId,
-                        principalTable: "Professores",
-                        principalColumn: "ProfessorId",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "LaboratorioTurma",
-                columns: table => new
-                {
-                    LaboratoriosLaboratorioId = table.Column<int>(type: "int", nullable: false),
-                    TurmasTurmaId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LaboratorioTurma", x => new { x.LaboratoriosLaboratorioId, x.TurmasTurmaId });
-                    table.ForeignKey(
-                        name: "FK_LaboratorioTurma_Laboratorios_LaboratoriosLaboratorioId",
-                        column: x => x.LaboratoriosLaboratorioId,
-                        principalTable: "Laboratorios",
-                        principalColumn: "LaboratorioId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LaboratorioTurma_Turmas_TurmasTurmaId",
-                        column: x => x.TurmasTurmaId,
-                        principalTable: "Turmas",
-                        principalColumn: "TurmaId",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "ProfessoresTurmas",
-                columns: table => new
-                {
-                    ProfessorId = table.Column<int>(type: "int", nullable: false),
-                    TurmaId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProfessoresTurmas", x => new { x.ProfessorId, x.TurmaId });
-                    table.ForeignKey(
-                        name: "FK_ProfessoresTurmas_Professores_ProfessorId",
+                        name: "FK_LaboratorioProfessores_Professores_ProfessorId",
                         column: x => x.ProfessorId,
                         principalTable: "Professores",
                         principalColumn: "ProfessorId",
                         onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "LaboratorioTurmas",
+                columns: table => new
+                {
+                    LaboratorioId = table.Column<int>(type: "int", nullable: false),
+                    TurmaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LaboratorioTurmas", x => new { x.LaboratorioId, x.TurmaId });
                     table.ForeignKey(
-                        name: "FK_ProfessoresTurmas_Turmas_TurmaId",
+                        name: "FK_LaboratorioTurmas_Laboratorios_LaboratorioId",
+                        column: x => x.LaboratorioId,
+                        principalTable: "Laboratorios",
+                        principalColumn: "LaboratorioId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LaboratorioTurmas_Turmas_TurmaId",
                         column: x => x.TurmaId,
                         principalTable: "Turmas",
                         principalColumn: "TurmaId",
@@ -140,24 +115,24 @@ namespace APIResevaDeLaboratorio.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ProfessorTurma",
+                name: "ProfessorTurmas",
                 columns: table => new
                 {
-                    ProfessoresProfessorId = table.Column<int>(type: "int", nullable: false),
-                    TurmasTurmaId = table.Column<int>(type: "int", nullable: false)
+                    ProfessorId = table.Column<int>(type: "int", nullable: false),
+                    TurmaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfessorTurma", x => new { x.ProfessoresProfessorId, x.TurmasTurmaId });
+                    table.PrimaryKey("PK_ProfessorTurmas", x => new { x.ProfessorId, x.TurmaId });
                     table.ForeignKey(
-                        name: "FK_ProfessorTurma_Professores_ProfessoresProfessorId",
-                        column: x => x.ProfessoresProfessorId,
+                        name: "FK_ProfessorTurmas_Professores_ProfessorId",
+                        column: x => x.ProfessorId,
                         principalTable: "Professores",
                         principalColumn: "ProfessorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProfessorTurma_Turmas_TurmasTurmaId",
-                        column: x => x.TurmasTurmaId,
+                        name: "FK_ProfessorTurmas_Turmas_TurmaId",
+                        column: x => x.TurmaId,
                         principalTable: "Turmas",
                         principalColumn: "TurmaId",
                         onDelete: ReferentialAction.Cascade);
@@ -175,10 +150,7 @@ namespace APIResevaDeLaboratorio.Migrations
                     DuracaoEmMinutos = table.Column<int>(type: "int", nullable: false),
                     LaboratorioId = table.Column<int>(type: "int", nullable: false),
                     TurmaId = table.Column<int>(type: "int", nullable: false),
-                    ProfessorId = table.Column<int>(type: "int", nullable: false),
-                    LaboratorioId1 = table.Column<int>(type: "int", nullable: true),
-                    ProfessorId1 = table.Column<int>(type: "int", nullable: true),
-                    TurmaId1 = table.Column<int>(type: "int", nullable: true)
+                    ProfessorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -188,56 +160,36 @@ namespace APIResevaDeLaboratorio.Migrations
                         column: x => x.LaboratorioId,
                         principalTable: "Laboratorios",
                         principalColumn: "LaboratorioId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Reservas_Laboratorios_LaboratorioId1",
-                        column: x => x.LaboratorioId1,
-                        principalTable: "Laboratorios",
-                        principalColumn: "LaboratorioId");
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reservas_Professores_ProfessorId",
                         column: x => x.ProfessorId,
                         principalTable: "Professores",
                         principalColumn: "ProfessorId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Reservas_Professores_ProfessorId1",
-                        column: x => x.ProfessorId1,
-                        principalTable: "Professores",
-                        principalColumn: "ProfessorId");
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reservas_Turmas_TurmaId",
                         column: x => x.TurmaId,
                         principalTable: "Turmas",
                         principalColumn: "TurmaId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Reservas_Turmas_TurmaId1",
-                        column: x => x.TurmaId1,
-                        principalTable: "Turmas",
-                        principalColumn: "TurmaId");
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LaboratorioProfessor_ProfessoresProfessorId",
-                table: "LaboratorioProfessor",
-                column: "ProfessoresProfessorId");
+                name: "IX_LaboratorioProfessores_ProfessorId",
+                table: "LaboratorioProfessores",
+                column: "ProfessorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LaboratorioTurma_TurmasTurmaId",
-                table: "LaboratorioTurma",
-                column: "TurmasTurmaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProfessoresTurmas_TurmaId",
-                table: "ProfessoresTurmas",
+                name: "IX_LaboratorioTurmas_TurmaId",
+                table: "LaboratorioTurmas",
                 column: "TurmaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProfessorTurma_TurmasTurmaId",
-                table: "ProfessorTurma",
-                column: "TurmasTurmaId");
+                name: "IX_ProfessorTurmas_TurmaId",
+                table: "ProfessorTurmas",
+                column: "TurmaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservas_LaboratorioId",
@@ -245,45 +197,27 @@ namespace APIResevaDeLaboratorio.Migrations
                 column: "LaboratorioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservas_LaboratorioId1",
-                table: "Reservas",
-                column: "LaboratorioId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reservas_ProfessorId",
                 table: "Reservas",
                 column: "ProfessorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservas_ProfessorId1",
-                table: "Reservas",
-                column: "ProfessorId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reservas_TurmaId",
                 table: "Reservas",
                 column: "TurmaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reservas_TurmaId1",
-                table: "Reservas",
-                column: "TurmaId1");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LaboratorioProfessor");
+                name: "LaboratorioProfessores");
 
             migrationBuilder.DropTable(
-                name: "LaboratorioTurma");
+                name: "LaboratorioTurmas");
 
             migrationBuilder.DropTable(
-                name: "ProfessoresTurmas");
-
-            migrationBuilder.DropTable(
-                name: "ProfessorTurma");
+                name: "ProfessorTurmas");
 
             migrationBuilder.DropTable(
                 name: "Reservas");

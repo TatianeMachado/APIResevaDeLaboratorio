@@ -20,12 +20,26 @@ public class LaboratorioRepository : ILaboratorioRepository
     }
     public async Task AddAsync(Laboratorio laboratorio)
     {
+        
+
         _laboratorioRepository.Laboratorios.Add(laboratorio);
         await _laboratorioRepository.SaveChangesAsync();
     }
     public async Task UpdateAsync(Laboratorio laboratorio)
     {
+        var local = _laboratorioRepository.Set<Laboratorio>()
+       .Local
+       .FirstOrDefault(entry => entry.LaboratorioId == laboratorio.LaboratorioId);
+
+        if (local != null)
+        {
+            _laboratorioRepository.Entry(local).State = EntityState.Detached;
+        }
+
+        _laboratorioRepository.Update(laboratorio);
+        await _laboratorioRepository.SaveChangesAsync();
         _laboratorioRepository.Laboratorios.Update(laboratorio);
+        _laboratorioRepository.Entry(laboratorio).State = EntityState.Modified;
         await _laboratorioRepository.SaveChangesAsync();
     }
     public async Task DeleteAsync(int id)
